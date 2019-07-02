@@ -2,13 +2,13 @@ package model;
 
 public class Candidato {
 
-	long cpf;
+	String cpf;
 	String nome;
 	String telefone;
 	String email;
 	String data;
 
-	public Candidato(long cpf, String nome, String telefone, String email, String data) {
+	public Candidato(String cpf, String nome, String telefone, String email, String data) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
@@ -17,11 +17,11 @@ public class Candidato {
 		this.data = data;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

@@ -166,7 +166,7 @@ public class Login extends JFrame {
 				ProfessorController professorController = new ProfessorController();
 				Usuario usuario2 = professorController.loginProfessor(tfUsuario.getText(), tfSenha.getText());
 				if (usuario2 != null) {
-					GUIProfessor guiProfessor = new GUIProfessor();
+					GUIProfessor guiProfessor = new GUIProfessor(tfUsuario.getText());
 					guiProfessor.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(this, "Usuario ou Senha incorreta");

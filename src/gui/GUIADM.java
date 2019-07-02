@@ -53,6 +53,27 @@ public class GUIADM extends JFrame {
 		});
 		btnBoleto.setBounds(236, 101, 89, 23);
 		contentPane.add(btnBoleto);
-	}
 
+		JButton btnGerenciarUsuario = new JButton("gerenciar Usuario");
+		btnGerenciarUsuario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				GUIGerenciarUsuario gerenciarUsuario = new GUIGerenciarUsuario();
+				gerenciarUsuario.setVisible(true);
+			}
+		});
+		btnGerenciarUsuario.setBounds(46, 172, 89, 23);
+		contentPane.add(btnGerenciarUsuario);
+
+		JButton btnCandidato = new JButton("Candidato");
+		btnCandidato.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUICandidato guiCandidato = new GUICandidato();
+				guiCandidato.setVisible(true);
+			}
+		});
+		btnCandidato.setBounds(236, 172, 89, 23);
+		contentPane.add(btnCandidato);
+	}
 }
