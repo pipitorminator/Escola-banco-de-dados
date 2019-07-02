@@ -11,6 +11,8 @@ import controllers.CandidatoController;
 import model.Candidato;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -108,9 +110,13 @@ public class GUICandidato extends JFrame {
 	}
 
 	public void salvar() {
+		try {
 		CandidatoController candidatoController = new CandidatoController();
 		Candidato candidato = new Candidato(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText());
 		candidatoController.inserir(candidato);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
+		}
 	}
 
 	public void buscar() {

@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -137,8 +138,13 @@ public class GUIProduto extends JFrame {
 	}
 
 	public void cadastrarProduto() {
+		try {
+			
 		ProdutorRef produto = new ProdutorRef(0, txtDescrio.getText(), txtUnidade.getText(), txtCodigoDeBarras.getText(), Double.parseDouble(txtPreoUnitario.getText()), txtMarca.getText(), txtTipo.getText());
 		produtoController.cadastrar(produto);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
+		}
 	}
 
 	public void buscarProduto() {
@@ -153,6 +159,10 @@ public class GUIProduto extends JFrame {
 	}
 
 	public void removerProduto() {
+		try {
 		produtoController.remover(txtCodigoDeBarras.getText());
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao deletar");
+		}
 	}
 }

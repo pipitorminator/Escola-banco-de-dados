@@ -42,6 +42,13 @@ public class GUISecretaria extends JFrame {
 		contentPane.add(btnProduto);
 
 		JButton btnAlmoxarifado = new JButton("Almoxarifado");
+		btnAlmoxarifado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				GUIAlmoxarifade guiAlmoxarifade = new GUIAlmoxarifade();
+				guiAlmoxarifade.setVisible(true);
+			}
+		});
 		btnAlmoxarifado.setBounds(265, 110, 102, 23);
 		contentPane.add(btnAlmoxarifado);
 	}

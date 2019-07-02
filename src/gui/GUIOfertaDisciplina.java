@@ -10,6 +10,8 @@ import controllers.OfertaDisciplinaController;
 import model.AlunoOfertaDisciplina;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -91,8 +93,12 @@ public class GUIOfertaDisciplina extends JFrame {
 	}
 
 	public void alocarAluno() {
+		try {
 		OfertaDisciplinaController controller = new OfertaDisciplinaController();
 		AlunoOfertaDisciplina alunoOfertaDisciplina = new AlunoOfertaDisciplina(Long.parseLong(textField.getText()), Long.parseLong(textField_1.getText()), textField_2.getText(), textField_3.getText(), 0);
 		controller.inserir(alunoOfertaDisciplina);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
+		}
 	}
 }

@@ -11,6 +11,8 @@ import controllers.BoletoController;
 import model.Boleto;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -128,9 +130,13 @@ public class GUIBoleto extends JFrame {
 	}
 
 	public void inserirBoleto() {
+		try {
 		Boleto boleto = new Boleto(1L, textFieldCB.getText(), Long.parseLong(textFieldCM.getText()), textFieldC.getText(), textFieldDV.getText(), "0", Integer.parseInt(textFieldN.getText()), Double.parseDouble(textFieldV.getText()), textFieldDE.getText());
 		BoletoController boletoController = new BoletoController();
 		boletoController.inserir(boleto);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
+		}
 
 	}
 

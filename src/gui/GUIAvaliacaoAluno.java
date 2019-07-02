@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -99,9 +100,13 @@ public class GUIAvaliacaoAluno extends JFrame {
 	}
 
 	public void atribuirNota() {
+		try {
 		AvaliacaoController avaliacaoController = new AvaliacaoController();
 		AlunoAvaliacaoOfertaDisciplina ofertaDisciplina = new AlunoAvaliacaoOfertaDisciplina(Long.parseLong(textField.getText()), textField_2.getText(), Long.parseLong(textField_1.getText()), Long.parseLong(textField_4.getText()), Double.parseDouble(textField_3.getText()));
 		avaliacaoController.inserir(ofertaDisciplina);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
+		}
 
 	}
 

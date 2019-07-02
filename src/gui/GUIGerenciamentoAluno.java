@@ -151,6 +151,7 @@ public class GUIGerenciamentoAluno extends JFrame {
 	}
 
 	public void inserirAluno() {
+		try {
 		RepositorioAluno repositorioAluno = new RepositorioAluno();
 		AlunoController alunoController = new AlunoController(repositorioAluno);
 		UsuarioController usuarioController = new UsuarioController();
@@ -161,6 +162,9 @@ public class GUIGerenciamentoAluno extends JFrame {
 			alunoController.cadastrar(aluno);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Aluno ja cadastrado");
+		}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao inserir");
 		}
 
 	}

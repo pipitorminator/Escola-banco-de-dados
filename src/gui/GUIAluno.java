@@ -91,9 +91,9 @@ public class GUIAluno extends JFrame {
 
 		JTextPane txtpnSexo = new JTextPane();
 		txtpnSexo.setEditable(false);
-		if(this.usuario.getSexo().equals("M")) {
+		if (this.usuario.getSexo().equals("M")) {
 			txtpnSexo.setText("Masculino");
-		}else {
+		} else {
 			txtpnSexo.setText("Feminino");
 		}
 		txtpnSexo.setBounds(92, 125, 130, 20);
@@ -146,24 +146,26 @@ public class GUIAluno extends JFrame {
 		lblNome_1.setBounds(265, 95, 46, 14);
 		contentPane.add(lblNome_1);
 
-		JTextPane txtpnNome_1 = new JTextPane();
-		txtpnNome_1.setEditable(false);
-		txtpnNome_1.setText(this.financeiro.getNome());
-		txtpnNome_1.setBounds(321, 90, 130, 20);
-		contentPane.add(txtpnNome_1);
+		if (financeiro != null) {
+			JTextPane txtpnNome_1 = new JTextPane();
+			txtpnNome_1.setEditable(false);
+			txtpnNome_1.setText(this.financeiro.getNome());
+			txtpnNome_1.setBounds(321, 90, 130, 20);
+			contentPane.add(txtpnNome_1);
 
-		JTextPane txtpnTelefoneres = new JTextPane();
-		txtpnTelefoneres.setEditable(false);
-		txtpnTelefoneres.setText(this.financeiro.getTelefone());
-		txtpnTelefoneres.setBounds(321, 121, 130, 20);
-		contentPane.add(txtpnTelefoneres);
+			JTextPane txtpnTelefoneres = new JTextPane();
+			txtpnTelefoneres.setEditable(false);
+			txtpnTelefoneres.setText(this.financeiro.getTelefone());
+			txtpnTelefoneres.setBounds(321, 121, 130, 20);
+			contentPane.add(txtpnTelefoneres);
 
-		JTextPane txtpnEmailres = new JTextPane();
-		txtpnEmailres.setEditable(false);
-		txtpnEmailres.setText(this.financeiro.getEmail());
-		txtpnEmailres.setBounds(321, 152, 130, 20);
-		contentPane.add(txtpnEmailres);
+			JTextPane txtpnEmailres = new JTextPane();
+			txtpnEmailres.setEditable(false);
+			txtpnEmailres.setText(this.financeiro.getEmail());
+			txtpnEmailres.setBounds(321, 152, 130, 20);
+			contentPane.add(txtpnEmailres);
 
+		}
 		JLabel lblTurmas = new JLabel("Turma");
 		lblTurmas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTurmas.setBounds(265, 200, 75, 20);
@@ -179,14 +181,14 @@ public class GUIAluno extends JFrame {
 		lblDisciplinas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDisciplinas.setBounds(265, 270, 116, 24);
 		contentPane.add(lblDisciplinas);
-		
+
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(265, 302, 161, 20);
 		contentPane.add(comboBox);
-		
-		for(int i=0;  i< nomeDisciplina.size(); i++) {
+
+		for (int i = 0; i < nomeDisciplina.size(); i++) {
 			comboBox.addItem(this.nomeDisciplina.get(i));
 		}
-		
+
 	}
 }

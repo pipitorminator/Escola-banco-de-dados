@@ -40,7 +40,7 @@ public class GUIADM extends JFrame {
 				guiGerenciamentoAluno.setVisible(true);
 			}
 		});
-		btnAluno.setBounds(46, 101, 89, 23);
+		btnAluno.setBounds(46, 101, 117, 23);
 		contentPane.add(btnAluno);
 
 		JButton btnBoleto = new JButton("Boleto");
@@ -51,7 +51,7 @@ public class GUIADM extends JFrame {
 				guiBoleto.setVisible(true);
 			}
 		});
-		btnBoleto.setBounds(236, 101, 89, 23);
+		btnBoleto.setBounds(236, 101, 108, 23);
 		contentPane.add(btnBoleto);
 
 		JButton btnGerenciarUsuario = new JButton("gerenciar Usuario");
@@ -62,7 +62,7 @@ public class GUIADM extends JFrame {
 				gerenciarUsuario.setVisible(true);
 			}
 		});
-		btnGerenciarUsuario.setBounds(46, 172, 89, 23);
+		btnGerenciarUsuario.setBounds(46, 172, 117, 23);
 		contentPane.add(btnGerenciarUsuario);
 
 		JButton btnCandidato = new JButton("Candidato");
@@ -73,7 +73,18 @@ public class GUIADM extends JFrame {
 				guiCandidato.setVisible(true);
 			}
 		});
-		btnCandidato.setBounds(236, 172, 89, 23);
+		btnCandidato.setBounds(236, 172, 108, 23);
 		contentPane.add(btnCandidato);
+
+		JButton btnCurso = new JButton("Curso");
+		btnCurso.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUICurso guiCurso = new GUICurso();
+				guiCurso.setVisible(true);
+			}
+		});
+		btnCurso.setBounds(150, 216, 108, 23);
+		contentPane.add(btnCurso);
 	}
 }
