@@ -8,11 +8,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controllers.CursoController;
+import model.Disciplina;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -32,26 +36,9 @@ public class GUICursoDisciplina extends JFrame {
 	CursoController cursoController = new CursoController();
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUICursoDisciplina frame = new GUICursoDisciplina();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public GUICursoDisciplina() {
-
 		setBounds(100, 100, 450, 398);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,6 +58,7 @@ public class GUICursoDisciplina extends JFrame {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				buscarDisci();
 			}
 		});
 		btnBuscar.setBounds(335, 71, 89, 23);
@@ -81,6 +69,12 @@ public class GUICursoDisciplina extends JFrame {
 		contentPane.add(comboBox_1);
 
 		JButton btnEditar = new JButton("editar");
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				editardisc();
+			}
+		});
 		btnEditar.setBounds(335, 141, 89, 23);
 		contentPane.add(btnEditar);
 
@@ -97,11 +91,11 @@ public class GUICursoDisciplina extends JFrame {
 		contentPane.add(lblNumcreditos);
 
 		JLabel lblCodigoArea = new JLabel("codigo area");
-		lblCodigoArea.setBounds(218, 207, 66, 14);
+		lblCodigoArea.setBounds(208, 207, 86, 14);
 		contentPane.add(lblCodigoArea);
 
 		JLabel lblCodigoCurso = new JLabel("codigo curso");
-		lblCodigoCurso.setBounds(218, 243, 66, 14);
+		lblCodigoCurso.setBounds(208, 243, 86, 14);
 		contentPane.add(lblCodigoCurso);
 
 		textField = new JTextField();
@@ -130,20 +124,104 @@ public class GUICursoDisciplina extends JFrame {
 		contentPane.add(textField_4);
 
 		JButton btnSalvar = new JButton("salvar");
+		btnSalvar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				salvar();
+			}
+		});
 		btnSalvar.setBounds(205, 288, 89, 23);
 		contentPane.add(btnSalvar);
 
 		JButton btnDeletar = new JButton("deletar");
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				delete();
+			}
+		});
 		btnDeletar.setBounds(321, 288, 89, 23);
 		contentPane.add(btnDeletar);
 
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				update();
+			}
+		});
 		btnUpdate.setBounds(266, 326, 89, 23);
 		contentPane.add(btnUpdate);
 
 		ArrayList<String> cursos = cursoController.todosCursos();
 		for (int i = 0; cursos.size() > i; i++) {
 			comboBox.addItem(cursos.get(i));
+		}
+
+	}
+
+	protected void update() {
+		try {
+			String[] id = comboBox_1.getSelectedItem().toString().split(Pattern.quote(" - "));
+			Disciplina disciplina = new Disciplina(Long.parseLong(id[0]), Long.parseLong(textField_3.getText()), 1L, Long.parseLong(textField_4.getText()), textField.getText(), textField_1.getText(), Integer.parseInt(textField_2.getText()));
+			cursoController.update(disciplina);
+			JOptionPane.showMessageDialog(this, "update feito");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro no update");
+		}
+		buscarDisci();
+	}
+
+	protected void salvar() {
+		try {
+			Disciplina disciplina = new Disciplina(1L, Long.parseLong(textField_3.getText()), 1L, Long.parseLong(textField_4.getText()), textField.getText(), textField_1.getText(), Integer.parseInt(textField_2.getText()));
+			cursoController.salvar(disciplina);
+			JOptionPane.showMessageDialog(this, "disciplina Inserida");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao Inserido");
+		}
+		buscarDisci();
+	}
+
+	protected void delete() {
+		try {
+			String[] id = comboBox_1.getSelectedItem().toString().split(Pattern.quote(" - "));
+			cursoController.delete(id[0]);
+			JOptionPane.showMessageDialog(this, "deletado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao deletar");
+		}
+		buscarDisci();
+
+	}
+
+	protected void editardisc() {
+		try {
+			String[] id = comboBox_1.getSelectedItem().toString().split(Pattern.quote(" - "));
+			Disciplina disciplina = cursoController.editardisc(id[0]);
+			textField.setText(disciplina.getNome());
+			textField_1.setText(disciplina.getEmenta());
+			textField_2.setText(String.valueOf(disciplina.getNum_creditos()));
+			textField_3.setText(String.valueOf(disciplina.getCodigo_area_conhecimento()));
+			textField_4.setText(String.valueOf(disciplina.getCodigo_curso()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro inesperado");
+		}
+
+	}
+
+	protected void buscarDisci() {
+		try {
+			String[] curso = comboBox.getSelectedItem().toString().split(Pattern.quote(" - "));
+			ArrayList<String> disci = cursoController.disciplinas(curso[0]);
+			comboBox_1.removeAllItems();
+			for (int i = 0; i < disci.size(); i++) {
+				comboBox_1.addItem(disci.get(i));
+
+			}
+		} catch (Exception e) {
+
+			JOptionPane.showMessageDialog(this, "erro inesperado");
 		}
 
 	}

@@ -21,7 +21,7 @@ public class GUIADM extends JFrame {
 	 */
 
 	public GUIADM() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 377);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,7 +84,40 @@ public class GUIADM extends JFrame {
 				guiCurso.setVisible(true);
 			}
 		});
-		btnCurso.setBounds(150, 216, 108, 23);
+		btnCurso.setBounds(46, 228, 117, 23);
 		contentPane.add(btnCurso);
+
+		JButton btnMatricula = new JButton("Matricula");
+		btnMatricula.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUIMatriculaBoleto guiMatriculaBoleto = new GUIMatriculaBoleto();
+				guiMatriculaBoleto.setVisible(true);
+			}
+		});
+		btnMatricula.setBounds(236, 228, 108, 23);
+		contentPane.add(btnMatricula);
+
+		JButton btnDisciplinas = new JButton("Disciplinas");
+		btnDisciplinas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUICursoDisciplina guiCursoDisciplina = new GUICursoDisciplina();
+				guiCursoDisciplina.setVisible(true);
+			}
+		});
+		btnDisciplinas.setBounds(46, 277, 117, 23);
+		contentPane.add(btnDisciplinas);
+
+		JButton btnOfertaProf = new JButton("Oferta Prof");
+		btnOfertaProf.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUIProfOferta guiProfOferta = new GUIProfOferta();
+				guiProfOferta.setVisible(true);
+			}
+		});
+		btnOfertaProf.setBounds(236, 277, 108, 23);
+		contentPane.add(btnOfertaProf);
 	}
 }
