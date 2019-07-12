@@ -28,6 +28,23 @@ public class DisciplinaController extends RepositorioBancoDados {
 
 	}
 
+	public ArrayList<String> buscarPeriodos() {
+		ArrayList<String> list = new ArrayList<>();
+		ResultSet rs = null;
+
+		rs = executarConsulta("select * from periodo_letivo;");
+
+		try {
+			while (rs.next()) {
+				list.add(rs.getString("id_periodo") + " - " + rs.getString("ano"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
 	public ArrayList<Disciplina> buscarDisciplina(String idCurso) {
 		ArrayList<Disciplina> list = new ArrayList<>();
 		ResultSet rs = null;
@@ -38,6 +55,23 @@ public class DisciplinaController extends RepositorioBancoDados {
 			while (rs.next()) {
 				Disciplina disciplina = new Disciplina(rs.getLong("id"), rs.getLong("codigo"), rs.getLong("id_disci_requisito"), rs.getLong("curso"), rs.getString("nome"), rs.getString("ementa"), rs.getInt("num_creditos"));
 				list.add(disciplina);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	public ArrayList<String> buscarTodasDisciplinas() {
+		ArrayList<String> list = new ArrayList<>();
+		ResultSet rs = null;
+
+		rs = executarConsulta("select * from disciplina;");
+
+		try {
+			while (rs.next()) {
+				list.add(rs.getString("id") + " - " + rs.getString("nome"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -77,7 +77,7 @@ public class GUIProduto extends JFrame {
 				cadastrarProduto();
 			}
 		});
-		btnCadastrar.setBounds(30, 327, 89, 23);
+		btnCadastrar.setBounds(23, 327, 89, 23);
 		contentPane.add(btnCadastrar);
 
 		JButton btnBuscar = new JButton("Buscar");
@@ -87,7 +87,7 @@ public class GUIProduto extends JFrame {
 				buscarProduto();
 			}
 		});
-		btnBuscar.setBounds(181, 327, 89, 23);
+		btnBuscar.setBounds(221, 327, 89, 23);
 		contentPane.add(btnBuscar);
 
 		JButton btnRemover = new JButton("Remover");
@@ -135,34 +135,62 @@ public class GUIProduto extends JFrame {
 		txtTipo.setColumns(10);
 		txtTipo.setBounds(154, 277, 178, 20);
 		contentPane.add(txtTipo);
+
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				update();
+			}
+		});
+		btnUpdate.setBounds(122, 327, 89, 23);
+		contentPane.add(btnUpdate);
 	}
 
 	public void cadastrarProduto() {
 		try {
-			
-		ProdutorRef produto = new ProdutorRef(0, txtDescrio.getText(), txtUnidade.getText(), txtCodigoDeBarras.getText(), Double.parseDouble(txtPreoUnitario.getText()), txtMarca.getText(), txtTipo.getText());
-		produtoController.cadastrar(produto);
-		}catch(Exception e) {
+
+			ProdutorRef produto = new ProdutorRef(0, txtDescrio.getText(), txtUnidade.getText(), txtCodigoDeBarras.getText(), Double.parseDouble(txtPreoUnitario.getText()), txtMarca.getText(), txtTipo.getText());
+			produtoController.cadastrar(produto);
+			JOptionPane.showMessageDialog(this, "Produto cadastrado");
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "erro ao inserir");
 		}
 	}
 
 	public void buscarProduto() {
 		ProdutorRef produto = produtoController.buscar(txtCodigoDeBarras.getText());
-		txtCodigoDeBarras.setText(produto.getCod_barras());
-		txtDescrio.setText(produto.getDescricao());
-		txtMarca.setText(produto.getMarca());
-		txtPreoUnitario.setText(String.valueOf(produto.getPreco_unit()));
-		txtTipo.setText(produto.getTipo());
-		txtUnidade.setText(produto.getUnidade());
+		if (produto == null) {
+			JOptionPane.showMessageDialog(this, "Produto não existe");
+		} else {
+			txtCodigoDeBarras.setText(produto.getCod_barras());
+			txtDescrio.setText(produto.getDescricao());
+			txtMarca.setText(produto.getMarca());
+			txtPreoUnitario.setText(String.valueOf(produto.getPreco_unit()));
+			txtTipo.setText(produto.getTipo());
+			txtUnidade.setText(produto.getUnidade());
+			JOptionPane.showMessageDialog(this, "Produto achado");
+		}
 
 	}
 
 	public void removerProduto() {
 		try {
-		produtoController.remover(txtCodigoDeBarras.getText());
-		}catch(Exception e) {
+			produtoController.remover(txtCodigoDeBarras.getText());
+			JOptionPane.showMessageDialog(this, "produto deletado");
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "erro ao deletar");
+		}
+	}
+
+	public void update() {
+		ProdutorRef produto = new ProdutorRef(0, txtDescrio.getText(), txtUnidade.getText(), txtCodigoDeBarras.getText(), Double.parseDouble(txtPreoUnitario.getText()), txtMarca.getText(), txtTipo.getText());
+		ProdutorRef produtoguia = produtoController.buscar(txtCodigoDeBarras.getText());
+		if (produtoguia != null) {
+			produtoController.update(produto);
+			JOptionPane.showMessageDialog(this, "Update feito");
+		} else {
+			JOptionPane.showMessageDialog(this, "Produto para Update não encontrado");
 		}
 	}
 }

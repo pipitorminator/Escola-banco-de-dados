@@ -11,10 +11,6 @@ public class Conexao {
 
 	public static void main(String[] args) {
 		try {
-			RepositorioBancoDados bancoDados = new RepositorioBancoDados();
-			Connection c = bancoDados.getConnection();
-			System.out.println("Conexao estabelecida!");
-			
 			Login login = new Login();
 			login.setVisible(true);
 			

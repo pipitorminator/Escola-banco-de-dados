@@ -70,6 +70,17 @@ public class GUIProfessor extends JFrame {
 		comboBox.setBounds(46, 185, 144, 20);
 		contentPane.add(comboBox);
 
+		JButton btnAreaDeConhecimento = new JButton("Area de conhecimento");
+		btnAreaDeConhecimento.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GUIAreaConhecimento areaConhecimento = new GUIAreaConhecimento();
+				areaConhecimento.setVisible(true);
+			}
+		});
+		btnAreaDeConhecimento.setBounds(274, 184, 111, 23);
+		contentPane.add(btnAreaDeConhecimento);
+
 		DisciplinaController controller = new DisciplinaController();
 		ArrayList<String> list = controller.buscar(cpf);
 

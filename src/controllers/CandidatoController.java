@@ -27,4 +27,12 @@ public class CandidatoController extends RepositorioBancoDados {
 		return candidato;
 
 	}
+
+	public void update(Candidato candidato) {
+		executarUpdate("update candidato set nome='" + candidato.getNome() + "', telefone='" + candidato.getTelefone() + "', email='" + candidato.getEmail() + "', data_candidato='" + candidato.getData() + "'  where cpf = '" + candidato.getCpf() + "';");
+	}
+
+	public void delete(String cpf) {
+		executarUpdate("DELETE FROM candidato WHERE cpf = '" + cpf + "';");
+	}
 }

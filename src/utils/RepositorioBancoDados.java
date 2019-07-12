@@ -13,7 +13,7 @@ public class RepositorioBancoDados {
 	private static final String URL = "jdbc:mysql://localhost:3306/gerenciamentodecurso?useTimezone=true&serverTimezone=UTC";
 	private static final String USUARIO = "root";
 	private static final String SENHA = "senha";
-	
+
 	protected Connection getConnection() {
 		try {
 			Class.forName(DRIVER);
@@ -33,7 +33,7 @@ public class RepositorioBancoDados {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage()); 
+				throw new RuntimeException(e.getMessage());
 			}
 		}
 	}
@@ -59,22 +59,29 @@ public class RepositorioBancoDados {
 			}
 		}
 	}
-	
+
 	protected void executarUpdate(String sql) {
 		Statement stmt = null;
 		Connection con = null;
 		try {
 			System.out.println("Comando Executado: " + sql);
 			con = getConnection();
+			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
+			con.commit();
 		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			close(stmt);
 		}
 	}
-	
+
 	protected PreparedStatement prepareStatement(String sql) {
 		try {
 			return getConnection().prepareStatement(sql);
@@ -82,7 +89,7 @@ public class RepositorioBancoDados {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-	
+
 	protected ResultSet executarConsulta(String sql) {
 		Statement stmt = null;
 		Connection con = null;
@@ -94,5 +101,6 @@ public class RepositorioBancoDados {
 		} catch (SQLException e) {
 			throw new RuntimeException(e.getMessage());
 		}
+
 	}
 }

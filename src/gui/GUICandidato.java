@@ -32,7 +32,7 @@ public class GUICandidato extends JFrame {
 	 * Create the frame.
 	 */
 	public GUICandidato() {
-		setBounds(100, 100, 303, 300);
+		setBounds(100, 100, 303, 351);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -107,26 +107,76 @@ public class GUICandidato extends JFrame {
 		});
 		btnBuscar.setBounds(160, 233, 89, 23);
 		contentPane.add(btnBuscar);
+
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				delete();
+			}
+		});
+		btnDeletar.setBounds(20, 264, 89, 23);
+		contentPane.add(btnDeletar);
+
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				update();
+			}
+		});
+		btnUpdate.setBounds(160, 267, 89, 23);
+		contentPane.add(btnUpdate);
 	}
 
 	public void salvar() {
 		try {
-		CandidatoController candidatoController = new CandidatoController();
-		Candidato candidato = new Candidato(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText());
-		candidatoController.inserir(candidato);
-		}catch(Exception e) {
+			CandidatoController candidatoController = new CandidatoController();
+			Candidato candidato = new Candidato(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText());
+			candidatoController.inserir(candidato);
+			JOptionPane.showMessageDialog(this, "inserido");
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "erro ao inserir");
 		}
 	}
 
 	public void buscar() {
-		CandidatoController candidatoController = new CandidatoController();
-		Candidato candidato = candidatoController.buscar(textField.getText());
-		textField.setText(candidato.getCpf());
-		textField_1.setText(candidato.getNome());
-		textField_2.setText(candidato.getEmail());
-		textField_3.setText(candidato.getTelefone());
-		textField_4.setText(candidato.getData());
+		try {
+			CandidatoController candidatoController = new CandidatoController();
+			Candidato candidato = candidatoController.buscar(textField.getText());
+			textField.setText(candidato.getCpf());
+			textField_1.setText(candidato.getNome());
+			textField_2.setText(candidato.getEmail());
+			textField_3.setText(candidato.getTelefone());
+			textField_4.setText(candidato.getData());
+			JOptionPane.showMessageDialog(this, "encontrado");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "não encontrado");
+		}
 
+	}
+
+	public void update() {
+		try {
+			CandidatoController candidatoController = new CandidatoController();
+			Candidato candidato = new Candidato(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText());
+			candidatoController.update(candidato);
+			JOptionPane.showMessageDialog(this, "sucesso no update");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "erro ao dar update");
+		}
+	}
+
+	public void delete() {
+		try {
+			CandidatoController candidatoController = new CandidatoController();
+			candidatoController.delete(textField.getText());
+			JOptionPane.showMessageDialog(this, "deletado");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "erro ao deletar");
+		}
 	}
 }

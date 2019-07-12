@@ -11,11 +11,16 @@ import controllers.AlmoxaridadoController;
 import model.Almoxarifado;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import javax.swing.JComboBox;
 
 public class GUIAlmoxarifade extends JFrame {
 
@@ -25,13 +30,13 @@ public class GUIAlmoxarifade extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
+	private JComboBox<String> comboBox;
 
 	/**
 	 * Create the frame.
 	 */
 	public GUIAlmoxarifade() {
-		setBounds(100, 100, 269, 360);
+		setBounds(100, 100, 269, 415);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -101,22 +106,93 @@ public class GUIAlmoxarifade extends JFrame {
 		lblCpf.setBounds(20, 72, 46, 14);
 		contentPane.add(lblCpf);
 
-		textField_5 = new JTextField();
-		textField_5.setBounds(129, 61, 114, 20);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
+		JButton btnInserir = new JButton("Inserir");
+		btnInserir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cadastrar();
+			}
+		});
+		btnInserir.setBounds(126, 288, 89, 23);
+		contentPane.add(btnInserir);
+
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				delete();
+			}
+		});
+		btnDeletar.setBounds(12, 343, 89, 23);
+		contentPane.add(btnDeletar);
+
+		JButton btnUpdate = new JButton("update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				update();
+			}
+		});
+		btnUpdate.setBounds(129, 343, 89, 23);
+		contentPane.add(btnUpdate);
+
+		comboBox = new JComboBox<String>();
+		comboBox.setBounds(129, 61, 114, 20);
+		contentPane.add(comboBox);
+		AlmoxaridadoController almoxaridadoController = new AlmoxaridadoController();
+		ArrayList<String> cpfs = almoxaridadoController.buscarCPF();
+		for (int i = 0; i < cpfs.size(); i++) {
+			comboBox.addItem(cpfs.get(i));
+		}
 	}
 
 	public void buscar() {
+		try {
+			AlmoxaridadoController almoxaridadoController = new AlmoxaridadoController();
+			Almoxarifado almoxarifado = almoxaridadoController.buscar(comboBox.getSelectedItem().toString());
+
+			textField.setText(String.valueOf(almoxarifado.getId()));
+			textField_1.setText(almoxarifado.getLocal());
+			textField_2.setText(String.valueOf(almoxarifado.getNumero_de_itens()));
+			textField_3.setText(almoxarifado.getDescricao());
+			textField_4.setText(almoxarifado.getTipo());
+			JOptionPane.showMessageDialog(this, "buscado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro no buscar");
+		}
+
+	}
+
+	public void update() {
 		AlmoxaridadoController almoxaridadoController = new AlmoxaridadoController();
-		Almoxarifado almoxarifado = almoxaridadoController.buscar(textField_5.getText());
+		Almoxarifado almoxarifado = new Almoxarifado(Integer.parseInt(textField.getText()), comboBox.getSelectedItem().toString(), textField_1.getText(), Integer.parseInt(textField_2.getText()), textField_3.getText(), textField_4.getText());
+		try {
+			almoxaridadoController.update(almoxarifado);
+			JOptionPane.showMessageDialog(this, "update feito");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro no update");
+		}
+	}
 
-//		textField.setText(String.valueOf(almoxarifado.getId()));
-		textField_1.setText(almoxarifado.getLocal());
-		textField_2.setText(String.valueOf(almoxarifado.getNumero_de_itens()));
-		textField_3.setText(almoxarifado.getDescricao());
-		textField_4.setText(almoxarifado.getTipo());
-		textField_5.setText(almoxarifado.getCpf_secretaria());
+	public void delete() {
+		AlmoxaridadoController almoxaridadoController = new AlmoxaridadoController();
+		try {
+			almoxaridadoController.delete(comboBox.getSelectedItem().toString());
+			JOptionPane.showMessageDialog(this, "deletado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro no delete");
+		}
 
+	}
+
+	public void cadastrar() {
+		AlmoxaridadoController almoxaridadoController = new AlmoxaridadoController();
+		Almoxarifado almoxarifado = new Almoxarifado(Integer.parseInt(textField.getText()), comboBox.getSelectedItem().toString(), textField_1.getText(), Integer.parseInt(textField_2.getText()), textField_3.getText(), textField_4.getText());
+		try {
+			almoxaridadoController.cadastrar(almoxarifado);
+			JOptionPane.showMessageDialog(this, "inserido");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro no inserir");
+		}
 	}
 }

@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -33,13 +34,13 @@ public class GUIGerenciarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public GUIGerenciarUsuario() {
-		setBounds(100, 100, 300, 408);
+		setBounds(100, 100, 300, 471);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblGerenciarUsuario = new JLabel("Gerenciar Usuario");
+		JLabel lblGerenciarUsuario = new JLabel("endereco de usuario");
 		lblGerenciarUsuario.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblGerenciarUsuario.setBounds(10, 0, 268, 45);
 		contentPane.add(lblGerenciarUsuario);
@@ -116,16 +117,89 @@ public class GUIGerenciarUsuario extends JFrame {
 		});
 		btnBuscar.setBounds(20, 336, 89, 23);
 		contentPane.add(btnBuscar);
+
+		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cadastrar();
+			}
+		});
+		btnCadastrar.setBounds(153, 336, 89, 23);
+		contentPane.add(btnCadastrar);
+
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				update();
+			}
+		});
+		btnUpdate.setBounds(20, 383, 89, 23);
+		contentPane.add(btnUpdate);
+
+		JButton btnDetelar = new JButton("deletar");
+		btnDetelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deletar();
+			}
+		});
+		btnDetelar.setBounds(153, 383, 89, 23);
+		contentPane.add(btnDetelar);
+	}
+
+	public void cadastrar() {
+		EnderecoController enderecoController = new EnderecoController();
+		Endereco endereco = new Endereco(textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText(), textField_5.getText(), textField_6.getText());
+		try {
+			enderecoController.inserir(endereco);
+			enderecoController.alterarCepUsuario(textField.getText(), textField_1.getText());
+			JOptionPane.showMessageDialog(this, "cadastrado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao cadastrar");
+		}
 	}
 
 	public void buscar() {
+		try {
+			EnderecoController controller = new EnderecoController();
+			Endereco endereco = controller.buscar(textField.getText());
+			textField_1.setText(endereco.getCep());
+			textField_2.setText(endereco.getBairro());
+			textField_3.setText(endereco.getRua());
+			textField_4.setText(endereco.getCidade());
+			textField_5.setText(endereco.getEstado());
+			textField_6.setText(endereco.getPais());
+			JOptionPane.showMessageDialog(this, "buscado");
+		} catch (Exception e) {
+
+			JOptionPane.showMessageDialog(this, "erro ao buscar");
+		}
+	}
+
+	public void update() {
 		EnderecoController controller = new EnderecoController();
-		Endereco endereco = controller.buscar(textField.getText());
-		textField_1.setText(endereco.getCep());
-		textField_2.setText(endereco.getBairro());
-		textField_3.setText(endereco.getRua());
-		textField_4.setText(endereco.getCidade());
-		textField_5.setText(endereco.getEstado());
-		textField_6.setText(endereco.getPais());
+		Endereco endereco = new Endereco(textField_1.getText(), textField_3.getText(), textField_2.getText(), textField_4.getText(), textField_5.getText(), textField_6.getText());
+		try {
+			controller.update(endereco);
+			controller.alterarCepUsuario(textField.getText(), textField_1.getText());
+
+			JOptionPane.showMessageDialog(this, "update feito");
+		} catch (Exception e) {
+
+			JOptionPane.showMessageDialog(this, "erro no update");
+		}
+	}
+
+	public void deletar() {
+		EnderecoController controller = new EnderecoController();
+		try {
+			controller.delete(textField_1.getText());
+			JOptionPane.showMessageDialog(this, "deletado");
+		} catch (Exception e) {
+
+			JOptionPane.showMessageDialog(this, "erro no delete");
+		}
 	}
 }

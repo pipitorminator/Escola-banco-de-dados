@@ -32,7 +32,7 @@ public class GUIADM extends JFrame {
 		lblAdministrador.setBounds(104, 11, 221, 39);
 		contentPane.add(lblAdministrador);
 
-		JButton btnAluno = new JButton("Aluno");
+		JButton btnAluno = new JButton("Usuario");
 		btnAluno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -54,7 +54,7 @@ public class GUIADM extends JFrame {
 		btnBoleto.setBounds(236, 101, 108, 23);
 		contentPane.add(btnBoleto);
 
-		JButton btnGerenciarUsuario = new JButton("gerenciar Usuario");
+		JButton btnGerenciarUsuario = new JButton("gerenciar endereco");
 		btnGerenciarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

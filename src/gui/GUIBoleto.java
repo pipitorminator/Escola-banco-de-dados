@@ -29,31 +29,32 @@ public class GUIBoleto extends JFrame {
 	private JTextField textFieldDV;
 	private JTextField textFieldC;
 	private JTextField textFieldN;
+	private JTextField textField;
 
 	/**
 	 * Create the frame.
 	 */
 	public GUIBoleto() {
-		setBounds(100, 100, 337, 428);
+		setBounds(100, 100, 337, 463);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblCodigoBanco = new JLabel("codigo banco");
-		lblCodigoBanco.setBounds(47, 75, 72, 14);
+		lblCodigoBanco.setBounds(42, 109, 72, 14);
 		contentPane.add(lblCodigoBanco);
 
 		JLabel lblCodigoMatricula = new JLabel("codigo matricula");
-		lblCodigoMatricula.setBounds(47, 110, 90, 14);
+		lblCodigoMatricula.setBounds(42, 140, 90, 14);
 		contentPane.add(lblCodigoMatricula);
 
 		JLabel lblDataEmisso = new JLabel("Data emiss\u00E3o");
-		lblDataEmisso.setBounds(47, 198, 95, 14);
+		lblDataEmisso.setBounds(42, 208, 95, 14);
 		contentPane.add(lblDataEmisso);
 
 		JLabel lblValor = new JLabel("valor");
-		lblValor.setBounds(47, 152, 46, 14);
+		lblValor.setBounds(42, 173, 46, 14);
 		contentPane.add(lblValor);
 
 		JLabel lblNumero = new JLabel("Numero");
@@ -74,23 +75,23 @@ public class GUIBoleto extends JFrame {
 		contentPane.add(lblBoleto);
 
 		textFieldCB = new JTextField();
-		textFieldCB.setBounds(146, 72, 165, 20);
+		textFieldCB.setBounds(146, 106, 165, 20);
 		contentPane.add(textFieldCB);
 		textFieldCB.setColumns(10);
 
 		textFieldCM = new JTextField();
 		textFieldCM.setColumns(10);
-		textFieldCM.setBounds(147, 107, 165, 20);
+		textFieldCM.setBounds(146, 137, 165, 20);
 		contentPane.add(textFieldCM);
 
 		textFieldV = new JTextField();
 		textFieldV.setColumns(10);
-		textFieldV.setBounds(146, 149, 165, 20);
+		textFieldV.setBounds(146, 170, 165, 20);
 		contentPane.add(textFieldV);
 
 		textFieldDE = new JTextField();
 		textFieldDE.setColumns(10);
-		textFieldDE.setBounds(146, 195, 165, 20);
+		textFieldDE.setBounds(146, 205, 165, 20);
 		contentPane.add(textFieldDE);
 
 		textFieldDV = new JTextField();
@@ -115,7 +116,7 @@ public class GUIBoleto extends JFrame {
 				inserirBoleto();
 			}
 		});
-		btnInserir.setBounds(30, 356, 89, 23);
+		btnInserir.setBounds(10, 356, 89, 23);
 		contentPane.add(btnInserir);
 
 		JButton btnBuscar = new JButton("Buscar");
@@ -125,32 +126,88 @@ public class GUIBoleto extends JFrame {
 				buscarBoleto();
 			}
 		});
-		btnBuscar.setBounds(205, 356, 89, 23);
+		btnBuscar.setBounds(109, 356, 89, 23);
 		contentPane.add(btnBuscar);
+
+		JLabel lblCodigo = new JLabel("Codigo");
+		lblCodigo.setBounds(42, 66, 46, 14);
+		contentPane.add(lblCodigo);
+
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(146, 63, 165, 20);
+		contentPane.add(textField);
+
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deletar();
+			}
+		});
+		btnDeletar.setBounds(222, 356, 89, 23);
+		contentPane.add(btnDeletar);
+
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				update();
+			}
+		});
+		btnUpdate.setBounds(109, 391, 89, 23);
+		contentPane.add(btnUpdate);
 	}
 
 	public void inserirBoleto() {
 		try {
-		Boleto boleto = new Boleto(1L, textFieldCB.getText(), Long.parseLong(textFieldCM.getText()), textFieldC.getText(), textFieldDV.getText(), "0", Integer.parseInt(textFieldN.getText()), Double.parseDouble(textFieldV.getText()), textFieldDE.getText());
-		BoletoController boletoController = new BoletoController();
-		boletoController.inserir(boleto);
-		}catch(Exception e) {
+			Boleto boleto = new Boleto(Long.parseLong(textField.getText()), textFieldCB.getText(), Long.parseLong(textFieldCM.getText()), textFieldC.getText(), textFieldDV.getText(), "0", Integer.parseInt(textFieldN.getText()), Double.parseDouble(textFieldV.getText()), textFieldDE.getText());
+			BoletoController boletoController = new BoletoController();
+			boletoController.inserir(boleto);
+			JOptionPane.showMessageDialog(this, "Boleto Inserido");
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "erro ao inserir");
 		}
 
 	}
 
 	public void buscarBoleto() {
-		BoletoController boletoController = new BoletoController();
-		Boleto boleto = boletoController.buscar(textFieldCM.getText());
-		textFieldC.setText(boleto.getCarteira());
-		textFieldCB.setText(boleto.getCodigo_banco());
-		textFieldCM.setText(String.valueOf(boleto.getCodigo_matricula()));
-		textFieldDE.setText(boleto.getData_emisao());
-		textFieldDV.setText(boleto.getData_venc());
-		textFieldN.setText(String.valueOf(boleto.getNumero()));
-		textFieldV.setText(String.valueOf(boleto.getValor()));
-
+		try {
+			BoletoController boletoController = new BoletoController();
+			Boleto boleto = boletoController.buscar(textField.getText());
+			textFieldC.setText(boleto.getCarteira());
+			textFieldCB.setText(boleto.getCodigo_banco());
+			textFieldCM.setText(String.valueOf(boleto.getCodigo_matricula()));
+			textFieldDE.setText(boleto.getData_emisao());
+			textFieldDV.setText(boleto.getData_venc());
+			textFieldN.setText(String.valueOf(boleto.getNumero()));
+			textFieldV.setText(String.valueOf(boleto.getValor()));
+			JOptionPane.showMessageDialog(this, "boleto buscado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "boleto não existe");
+		}
 	}
 
+	public void deletar() {
+		try {
+			BoletoController boletoController = new BoletoController();
+			boletoController.deletar(textField.getText());
+			JOptionPane.showMessageDialog(this, "boleto deletado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "erro ao deletar");
+		}
+	}
+
+	public void update() {
+		BoletoController boletoController = new BoletoController();
+		Boleto boletoguia = boletoController.buscar(textField.getText());
+		if (boletoguia != null) {
+			Boleto boleto = new Boleto(Long.parseLong(textField.getText()), textFieldCB.getText(), Long.parseLong(textFieldCM.getText()), textFieldC.getText(), textFieldDV.getText(), "0", Integer.parseInt(textFieldN.getText()), Double.parseDouble(textFieldV.getText()), textFieldDE.getText());
+			boletoController.update(boleto);
+			JOptionPane.showMessageDialog(this, "boleto Atualizado");
+		} else {
+			JOptionPane.showMessageDialog(this, "boleto não existe");
+		}
+
+	}
 }

@@ -3,12 +3,13 @@ package controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Aluno;
+import model.Professor;
 import model.Usuario;
 import utils.RepositorioBancoDados;
 
-public class ProfessorController extends RepositorioBancoDados{
+public class ProfessorController extends RepositorioBancoDados {
 
-	
 	public Usuario loginProfessor(String cpf, String senha) {
 
 		Usuario usuario = null;
@@ -23,5 +24,9 @@ public class ProfessorController extends RepositorioBancoDados{
 		}
 
 		return usuario;
+	}
+
+	public void inserir(Professor professor) {
+		executarUpdate("insert into professor(cpf) VALUES ('" + professor.getCpf() + "' )");
 	}
 }

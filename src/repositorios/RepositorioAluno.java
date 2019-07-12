@@ -1,5 +1,6 @@
 package repositorios;
 
+import java.awt.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,6 +28,21 @@ public class RepositorioAluno extends RepositorioBancoDados {
 		}
 
 		return retorno;
+	}
+
+	public ArrayList<String> buscarTodosAlunos() {
+		ArrayList<String> cpfs = new ArrayList<>();
+		ResultSet rs = null;
+		try {
+			rs = super.executarConsulta("SELECT * FROM aluno");
+
+			while (rs.next()) {
+				cpfs.add(rs.getString("cpf"));
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		return cpfs;
 	}
 
 	public Aluno consultar(String cpf) {

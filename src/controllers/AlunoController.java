@@ -17,6 +17,10 @@ public class AlunoController {
 		this.repositorioAluno = repositorioAluno;
 	}
 
+	public ArrayList<String> buscarTodosAlunos() {
+		return repositorioAluno.buscarTodosAlunos();
+	}
+
 	public void cadastrar(Aluno aluno) throws Exception {
 
 		if (!repositorioAluno.existe(aluno.getCpf_user())) {
@@ -55,13 +59,14 @@ public class AlunoController {
 
 		return repositorioAluno.getResponsavel(cpf);
 	}
-	
+
 	public String getNomeCurso(String cpf) {
-		
+
 		return repositorioAluno.getNomeCurso(cpf);
 	}
-	public ArrayList<String> getNomeDisciplina(String cpf){
-		
+
+	public ArrayList<String> getNomeDisciplina(String cpf) {
+
 		return repositorioAluno.getNomeDisciplina(cpf);
 	}
 }

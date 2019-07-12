@@ -28,8 +28,12 @@ public class ProdutoController extends RepositorioBancoDados {
 		return produto;
 
 	}
-	
+
 	public void remover(String codigobarra) {
 		executarUpdate("DELETE FROM produto_ref WHERE cod_barra = '" + codigobarra + "'");
+	}
+
+	public void update(ProdutorRef produto) {
+		executarUpdate("update produto_ref set descricao= '" + produto.getDescricao() + "', unidade= " + produto.getUnidade() + ", marca='" + produto.getMarca() + "', tipo='" + produto.getTipo() + "', preco_unit=" + produto.getPreco_unit() + " where cod_barra = '" + produto.getCod_barras() + "';");
 	}
 }
